@@ -33,7 +33,7 @@ AltoMe nhận Alertmanager webhook v4, lưu bền vững vào SQLite, tạo mộ
 
 ## 3. Cài đặt bằng Docker
 
-Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và Alertmanager truy cập được port 18082.
+Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và Alertmanager truy cập được port 18082. Image production là `altome:v1`; cấu hình runtime nằm trong một file `altome.conf`, nên đổi cấu hình không cần build lại image.
 
 ```bash
 git clone <repository>
@@ -47,34 +47,23 @@ chown 10001:10001 secrets secrets/* data
 chmod 700 secrets data
 ```
 
-### Cấu hình .env
+Nếu máy triển khai chưa có image, nạp image đã build sẵn một lần:
+
+```bash
+docker load -i altome-v1.tar
+```
+
+### Cấu hình `altome.conf`
+
+Sửa trực tiếp file `altome.conf`. Mỗi biến đã có một dòng chú thích mô tả ngay phía trên; không cần sửa Dockerfile hoặc build lại image. Các giá trị bí mật vẫn để trong `secrets/` và được mount read-only để không phải ghi password/API key vào file cấu hình hoặc Git.
 
 ```dotenv
-LISTEN_HOST=0.0.0.0
-LISTEN_PORT=18082
-WEBHOOK_USER=alertmanager
-WEBHOOK_PASSWORD_FILE=/run/secrets/webhook_password
-ME_URL=https://117.5.151.176:8444
-ME_API_KEY_FILE=/run/secrets/me_api_key
-ME_VERIFY_TLS=false
-ME_TIMEOUT=30
-ME_RESOURCE_ID=10000369
-APPMANAGER_INTEGRATION_MODE=dynamic_rest_monitor
-ME_FEED_BASE_URL=http://117.5.151.176:18082
-ME_FEED_TOKEN_FILE=/run/secrets/feed_token
-RESOLVED_MONITOR_RETENTION_HOURS=24
-DB_PATH=/data/alerts.sqlite3
-RETRY_SECONDS=15
-SYNC_INTERVAL=30
-MAX_BODY_BYTES=2097152
-IDENTITY_MODE=instance
-LOG_LEVEL=INFO
+# Xem altome.conf; file thật đã có chú thích cho từng biến.
 ```
 
 Khởi động:
 
 ```bash
-docker compose build
 docker compose up -d
 docker compose ps
 docker compose logs -f --tail=100 me-alert-sync
@@ -82,6 +71,14 @@ curl -fsS http://127.0.0.1:18082/health
 curl -fsS http://127.0.0.1:18082/ready
 curl -fsS http://127.0.0.1:18082/metrics
 ```
+
+Sau mỗi lần đổi `altome.conf`, chỉ cần chạy lại:
+
+```bash
+docker compose up -d
+```
+
+Compose sẽ dùng lại image `altome:v1`; dữ liệu SQLite vẫn nằm trong thư mục `data/`.
 
 `ME_SLOT_ATTRIBUTE_IDS` chỉ dùng khi rollback về `legacy_slots`; không dùng trong chế độ mặc định.
 
