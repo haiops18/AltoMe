@@ -36,7 +36,7 @@ AltoMe nhận Alertmanager webhook v4, lưu bền vững vào SQLite, tạo mộ
 Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và Alertmanager truy cập được port 18082. Image production là `altome:v2`; cấu hình runtime nằm trong một file `altome.conf`, nên đổi cấu hình không cần build lại image.
 
 ```bash
-git clone <repository>
+git clone https://github.com/haiops18/AltoMe.git
 cd me-alert-sync
 mkdir -p data secrets
 printf '%s' 'APP_MANAGER_API_KEY' > secrets/me_api_key
