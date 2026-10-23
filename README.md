@@ -31,6 +31,14 @@ AltoMe nhận Alertmanager webhook v4, lưu bền vững vào SQLite, tạo mộ
 - Feed riêng: `GET /appmanager-feed/{fingerprint}` với `Authorization: Bearer <token>`.
 - API vận hành: `/health`, `/ready`, `/metrics`, `/api/v1/alert-mappings`.
 
+## Ảnh minh họa
+
+Các ảnh dưới đây minh họa cảnh báo đã được AltoMe đồng bộ và hiển thị trên AppManager:
+
+![Danh sách cảnh báo trên AppManager](image/alert_me1.png)
+
+![Chi tiết cảnh báo trên AppManager](image/alertME2.png)
+
 ## 3. Cài đặt bằng Docker
 
 Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và Alertmanager truy cập được port 18082. Image production là `altome:v2`; cấu hình runtime nằm trong một file `altome.conf`, nên đổi cấu hình không cần build lại image.
