@@ -45,7 +45,7 @@ Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và 
 
 ```bash
 git clone https://github.com/haiops18/AltoMe.git
-cd me-alert-sync
+cd AltoMe
 mkdir -p data secrets
 printf '%s' 'APP_MANAGER_API_KEY' > secrets/me_api_key
 printf '%s' 'WEBHOOK_PASSWORD' > secrets/webhook_password
@@ -54,6 +54,15 @@ chmod 600 secrets/*
 chown 10001:10001 secrets secrets/* data
 chmod 700 secrets data
 ```
+
+Trước khi khởi động trên máy mới, sửa các giá trị phụ thuộc môi trường trong `altome.conf`, tối thiểu:
+
+- `ME_URL`: URL và port HTTPS của AppManager.
+- `ME_FEED_BASE_URL`: địa chỉ mà AppManager dùng để poll AltoMe.
+- `ME_RESOURCE_ID`: resource/group AppManager sở hữu monitor.
+- `LISTEN_PORT`: port publish trên máy Docker nếu dùng port khác 18082.
+
+Repository có sẵn source, Compose, cấu hình mẫu và image `image/altome-v2.tar`. Không chứa API key, password, feed token hoặc database runtime; các giá trị này phải tạo riêng trong `secrets/` trên từng máy.
 
 Nếu máy triển khai chưa có image, nạp image đã build sẵn một lần:
 
