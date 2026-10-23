@@ -1,0 +1,6 @@
+.env
+secrets/
+data/
+*.tar
+__pycache__/
+*.sqlite3*

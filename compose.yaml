@@ -1,0 +1,18 @@
+services:
+  me-alert-sync:
+    build: .
+    image: me-alert-sync:2.0
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    ports:
+      - "0.0.0.0:18082:18082" # restrict with firewall; prefer HTTPS reverse proxy for untrusted networks
+    volumes:
+      - ./data:/data
+      - ./secrets:/run/secrets:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    read_only: true
+    tmpfs:
+      - /tmp

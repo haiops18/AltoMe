@@ -1,0 +1,5 @@
+.env
+secrets/
+data/
+*.tar
+__pycache__/

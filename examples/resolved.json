@@ -1,0 +1,1 @@
+{"version":"4","groupKey":"test","status":"resolved","truncatedAlerts":0,"alerts":[{"status":"resolved","labels":{"alertname":"HighCPU","instance":"linux01","severity":"warning"},"annotations":{"message":"CPU normal linux01"},"fingerprint":"test123"}]}
