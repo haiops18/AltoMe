@@ -1,6 +1,6 @@
 services:
   me-alert-sync:
-    image: altome:v1
+    image: altome:v2
     # Chỉ bỏ comment dòng build khi cần build image trong môi trường phát triển.
     # build: .
     restart: unless-stopped

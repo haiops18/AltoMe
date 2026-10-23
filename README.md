@@ -33,7 +33,7 @@ AltoMe nhận Alertmanager webhook v4, lưu bền vững vào SQLite, tạo mộ
 
 ## 3. Cài đặt bằng Docker
 
-Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và Alertmanager truy cập được port 18082. Image production là `altome:v1`; cấu hình runtime nằm trong một file `altome.conf`, nên đổi cấu hình không cần build lại image.
+Yêu cầu: Docker Engine/Compose, AppManager HTTPS API, API key AppManager và Alertmanager truy cập được port 18082. Image production là `altome:v2`; cấu hình runtime nằm trong một file `altome.conf`, nên đổi cấu hình không cần build lại image.
 
 ```bash
 git clone <repository>
@@ -50,7 +50,7 @@ chmod 700 secrets data
 Nếu máy triển khai chưa có image, nạp image đã build sẵn một lần:
 
 ```bash
-docker load -i altome-v1.tar
+docker load -i image/altome-v2.tar
 ```
 
 ### Cấu hình `altome.conf`
@@ -78,7 +78,7 @@ Sau mỗi lần đổi `altome.conf`, chỉ cần chạy lại:
 docker compose up -d
 ```
 
-Compose sẽ dùng lại image `altome:v1`; dữ liệu SQLite vẫn nằm trong thư mục `data/`.
+Compose sẽ dùng lại image `altome:v2`; dữ liệu SQLite vẫn nằm trong thư mục `data/`.
 
 `ME_SLOT_ATTRIBUTE_IDS` chỉ dùng khi rollback về `legacy_slots`; không dùng trong chế độ mặc định.
 
